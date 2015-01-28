@@ -5,7 +5,7 @@
 
 # library(Rcurl) # żeby zalogować się po SCP i zgrać wyniki - do zrobienia później
 
-setwd("D:\\temp\\kolektor\\TUNSS")
+setwd("D:\\temp\\kolektor\\TUNSS") # tutaj ścieżka do katalogu w którym będą pliki XML
 require(XML)
 dir(pattern = "^\\d{4}-\\d{2}-\\d{2}.*") -> pliki
 structure(character(0), .Dim = c(0L, 16L),
@@ -41,11 +41,11 @@ for (n_pliku in pliki) {
 rm(badacz, badany, id, skale, tester, data, data2, godzina, godzina2, n_pliku, pliki, podsumowanie, strefa, temp)
 file.remove(c("summary.xml", "tasks.xml", "user.xml"))
 
-write.csv2(wyniki, "podsumowanie_long.csv")
+write.csv2(wyniki, "podsumowanie_long.csv") # podsumowanie zapisywane jest w katalogu w którym uruchamia się skrypt
 as.data.frame(wyniki) -> wyniki
 wyniki$uID <- as.numeric(as.factor(wyniki$n_pliku))
 wyniki_wide <- reshape(wyniki, timevar = "area", 
                        idvar = c("uID", "n_pliku", "tester", "id", "badany[1]", "badany[2]",
                                  "badany[3]", "data", "godzina", "data2", "godzina2", "strefa"),
                        direction = "wide")
-write.csv2(wyniki_wide, "podsumowanie_wide.csv")
+write.csv2(wyniki_wide, "podsumowanie_wide.csv") # tutaj j.w.
